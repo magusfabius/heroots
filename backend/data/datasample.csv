@@ -1,0 +1,3 @@
+event_name,host_country,date,SDG_goal,description,image_url,gps_coordinates,links
+"Water Conservation Workshop","USA","2022-01-15","6","A workshop focused on water conservation.","img/water_workshop.jpg","40.730610,-73.935242","www.link1.com|www.link2.com"
+"Clean Energy Seminar","Germany","2022-02-05","7","Seminar on advances in clean energy.","img/clean_energy_seminar.jpg","52.520008,13.404954","www.link3.com|www.link4.com"
