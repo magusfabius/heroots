@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const bcrypt = require('bcrypt');
 const User = require('./models/User');
+const fs = require('fs');
+const Papa = require('papaparse');
 
 const app = express();
 
@@ -26,17 +28,44 @@ app.use(session({
 }));
 
 // Connect to MongoDB
+/*
 mongoose.connect('mongodb://localhost:27017/surfer', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
 .then(() => console.log('Connected to MongoDB'))
 .catch((err) => console.error('Error connecting to MongoDB:', err));
+*/
 
 // Routes
 app.get('/', (req, res) => {
-  res.send('Welcome to the username and password access system!');
+  const loginForm = `
+    <html>
+      <head>
+        <title>Login Panel</title>
+      </head>
+      <body>
+        <h2>Login to Heroots</h2>
+        <form action="/login" method="post">
+          <div>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+          </div>
+          <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+          </div>
+          <div>
+            <button type="submit">Login</button>
+          </div>
+        </form>
+      </body>
+    </html>
+  `;
+
+  res.send(loginForm);
 });
+
 
 app.post('/register', async (req, res) => {
 
@@ -114,20 +143,14 @@ app.get('/logout', (req, res) => {
   });
 });
 
-
-
-
-const express = require('express');
-const fs = require('fs');
-const Papa = require('papaparse');
-
+// TODO get only active events
 app.get('/events', (req, res) => {
   res.send('Welcome to the events page!');
 });
 
-
+// TODO, insert the date range of the events
 app.get('/csv-to-json', (req, res) => {
-    const csvFilePath = './data/datasample.csv';
+    const csvFilePath = './data/events_2023_10.csv';
 
     fs.readFile(csvFilePath, 'utf8', (err, csvString) => {
         if (err) {
@@ -154,10 +177,6 @@ app.get('/csv-to-json', (req, res) => {
             }
         });
     });
-});
-
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
 });
 
 
